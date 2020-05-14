@@ -4,7 +4,7 @@ type userType = {
 };
 let users: Array<userType> = [];
 
-export const addUser = (id: string, name: string): string => {
+const addUser = (id: string, name: string): string => {
   name = name.trim().toLowerCase();
 
   const isUserExist = users.find(user => user.name === name);
@@ -23,12 +23,14 @@ export const addUser = (id: string, name: string): string => {
   return null;
 };
 
-export const getUser = (id: string) => users.find(user => user.id === id);
+const getUser = (id: string) => users.find(user => user.id === id);
 
-export const removeUser = (id: string): void => {
+const removeUser = (id: string): void => {
   const index = users.findIndex(user => user.id === id);
 
   if (index !== -1) {
     users.splice(index, 1)[0];
   }
 };
+
+export { getUser, removeUser, addUser };
