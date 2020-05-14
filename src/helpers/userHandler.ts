@@ -1,13 +1,17 @@
 type userType = {
   id: string;
   name: string;
+  room: string;
 };
 let users: Array<userType> = [];
 
-const addUser = (id: string, name: string): string => {
+const addUser = (id: string, name: string, room: string): string => {
   name = name.trim().toLowerCase();
+  room = room.trim().toLowerCase();
 
-  const isUserExist = users.find(user => user.name === name);
+  const isUserExist = users.find(
+    user => user.name === name && user.room === room
+  );
 
   if (!name) {
     return 'Name are required!';
@@ -17,7 +21,7 @@ const addUser = (id: string, name: string): string => {
     return 'This name is taken';
   }
 
-  const user = { id, name };
+  const user = { id, name, room };
 
   users.push(user);
   return null;
