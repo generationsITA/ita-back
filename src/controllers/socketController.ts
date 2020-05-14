@@ -1,8 +1,8 @@
-import { addUser, removeUser, getUser } from '../helpers/userHandler';
+import { userHandler } from '../helpers';
 
 const socketController = (socket: SocketIO.Socket) => {
   socket.on('join', ({ name }, callback) => {
-    const error = addUser(socket.id, name);
+    const error = userHandler.addUser(socket.id, name);
 
     if (error) {
       return callback({ error });
@@ -14,14 +14,14 @@ const socketController = (socket: SocketIO.Socket) => {
   });
 
   socket.on('sendMessage', ({ message }) => {
-    const { name } = getUser(socket.id);
-    console.log(name);
-    console.log(message);
+    // const address =
+    // socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+    const { name } = userHandler.getUser(socket.id);
     socket.broadcast.to('general').emit('message', { name, text: message });
   });
 
   socket.on('disconnect', () => {
-    removeUser(socket.id);
+    userHandler.removeUser(socket.id);
   });
 };
 export default socketController;

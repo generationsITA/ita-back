@@ -8,7 +8,7 @@ import errorhandler from 'errorhandler';
 import router from './routes';
 import { port } from './configs/general';
 import initMongoDB from './configs/mongodb';
-import socketController from './controllers/socketController';
+import { socketController } from './controllers';
 
 const app = express();
 const server = http.createServer(app);
@@ -22,9 +22,7 @@ app.use(logger(process.env.NODE_ENV));
 
 app.use('/api', router);
 
-io.on('connect', socket => {
-  socketController(socket);
-});
+io.on('connect', socketController);
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
