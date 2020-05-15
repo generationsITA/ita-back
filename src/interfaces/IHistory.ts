@@ -1,6 +1,9 @@
 interface IHistory {
-  userId: String;
-  message: String;
+  name: string;
+  message: string;
+  room: string;
+  date: Date;
+  adress: string;
 }
 
 export default IHistory;

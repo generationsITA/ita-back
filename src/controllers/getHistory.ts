@@ -1,15 +1,17 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 
-import { IHistoryRec } from '../interfaces';
 import { getAllHistory } from '../services';
+import { IHistoryRec, IRequest } from '../interfaces';
 
 const getHistory = async (
-  req: Request,
+  req: IRequest,
   res: Response<IHistoryRec[]>,
   next: NextFunction
 ) => {
   try {
-    const history = await getAllHistory();
+    const { page, perPage } = req.locals;
+
+    const history = await getAllHistory(page, perPage);
 
     res.json(history);
   } catch (error) {

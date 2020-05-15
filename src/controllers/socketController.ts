@@ -1,3 +1,4 @@
+import { addHistory } from '../services';
 import { userHandler } from '../helpers';
 
 interface RequestMessage {
@@ -19,25 +20,33 @@ const socketController = (socket: SocketIO.Socket) => {
       if (error) {
         return callback({ error });
       }
+
       console.log(name);
+
       socket.join(room);
 
       callback();
     }
   );
 
-  socket.on('sendMessage', ({ text }: RequestMessage, callback: () => void) => {
-    // const address =
-    // socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+  socket.on('sendMessage', ({ text }: RequestMessage) => {
+    const adress: string =
+      socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+
     const { name, room } = userHandler.getUser(socket.id);
 
+    const sendingDate = new Date();
+
+    addHistory({ name, message: text, room, date: sendingDate, adress });
+
     socket.broadcast.to(room).emit('message', { name, text });
+
     console.log(`${name}: ${text}`);
-    callback();
   });
 
   socket.on('disconnect', () => {
     userHandler.removeUser(socket.id);
   });
 };
+
 export default socketController;
