@@ -25,7 +25,7 @@ app.use('/api', router);
 io.on('connect', socketController);
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.json('Server running');
 });
 
 app.use(errorhandler());
