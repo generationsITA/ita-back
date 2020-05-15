@@ -29,7 +29,7 @@ const socketController = (socket: SocketIO.Socket) => {
     }
   );
 
-  socket.on('sendMessage', ({ text }: RequestMessage) => {
+  socket.on('sendMessage', ({ text }: RequestMessage, callback: () => void) => {
     const adress: string =
       socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
 
@@ -42,6 +42,7 @@ const socketController = (socket: SocketIO.Socket) => {
     socket.broadcast.to(room).emit('message', { name, text });
 
     console.log(`${name}: ${text}`);
+    callback();
   });
 
   socket.on('disconnect', () => {

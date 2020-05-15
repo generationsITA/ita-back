@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const cloudUrl =
   'mongodb+srv://denys:mongodb619@it-academy-bbkhn.mongodb.net/test?retryWrites=true&w=majority';
 
-const url = process.env.mongoDbUrl || cloudUrl;
+const url = process.env.MONGODB_URI || cloudUrl;
 
 const initMongoDB = () => {
   mongoose.connect(url, {
