@@ -1,4 +1,5 @@
 import http from 'http';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import logger from 'morgan';
 import express from 'express';
@@ -19,6 +20,8 @@ dotenv.config();
 initMongoDB();
 
 app.use(logger(process.env.NODE_ENV));
+
+app.use(cors());
 
 app.use('/api', router);
 
