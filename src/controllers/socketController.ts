@@ -24,17 +24,25 @@ const socketController = (socket: SocketIO.Socket) => {
       console.log(name);
 
       socket.join(room);
+      socket.broadcast.to(room).emit('message', {
+        name: 'System',
+        text: `${name} joined ${room}`,
+      });
+      socket.emit('message', {
+        name: 'System',
+        text: `You joined ${room}`,
+      });
 
       callback();
     }
   );
 
-  socket.on('sendMessage', ({ text }: RequestMessage, callback: () => void) => {
+  socket.on('sendMessage', ({ text }: RequestMessage) => {
     const adress: string =
       socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
 
     const user = userHandler.getUser(socket.id);
-    if (user) {
+    if (!user) {
       return;
     }
     const { name, room } = user;
@@ -46,11 +54,19 @@ const socketController = (socket: SocketIO.Socket) => {
     socket.broadcast.to(room).emit('message', { name, text });
 
     console.log(`${name}: ${text}`);
-    callback();
   });
 
   socket.on('disconnect', () => {
+    const user = userHandler.getUser(socket.id);
+    if (!user) {
+      return;
+    }
+    const { name, room } = user;
     userHandler.removeUser(socket.id);
+    socket.broadcast.to(room).emit('message', {
+      name: 'System',
+      text: `${name} disconnected from ${room}`,
+    });
   });
 };
 
