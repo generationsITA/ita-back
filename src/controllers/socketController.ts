@@ -1,5 +1,5 @@
 import { addHistory } from '../services';
-import { userHandler } from '../helpers';
+import { userHandler, disconnectUser } from '../helpers';
 
 interface RequestMessage {
   id?: string;
@@ -55,18 +55,12 @@ const socketController = (socket: SocketIO.Socket) => {
 
     console.log(`${name}: ${text}`);
   });
+  socket.on('leaveRoom', () => {
+    disconnectUser(socket);
+  });
 
   socket.on('disconnect', () => {
-    const user = userHandler.getUser(socket.id);
-    if (!user) {
-      return;
-    }
-    const { name, room } = user;
-    userHandler.removeUser(socket.id);
-    socket.broadcast.to(room).emit('message', {
-      name: 'System',
-      text: `${name} disconnected from ${room}`,
-    });
+    disconnectUser(socket);
   });
 };
 
