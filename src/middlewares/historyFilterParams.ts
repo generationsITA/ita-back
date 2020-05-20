@@ -3,15 +3,12 @@ import { Response, NextFunction } from 'express';
 
 import * as interfaces from '../interfaces';
 
-const historyPagParamas = (
+const historyFilterParams = (
   req: interfaces.IRequest,
   res: Response<interfaces.IHistoryRec[]>,
   next: NextFunction
 ) => {
-  let pageNum = 1;
-  let perPageNum = 10;
-
-  const { room, name, adress, startDate, endDate, page, perPage } = req.query;
+  const { room, user, ip, startDate, endDate, page, perPage } = req.query;
 
   const filters: interfaces.IHistoryFilters = {};
 
@@ -19,12 +16,12 @@ const historyPagParamas = (
     filters.room = room.toString();
   }
 
-  if (name) {
-    filters.name = name.toString();
+  if (user) {
+    filters.user = user.toString();
   }
 
-  if (adress) {
-    filters.adress = adress.toString();
+  if (ip) {
+    filters.ip = ip.toString();
   }
 
   const date: interfaces.IHistoryDate = {};
@@ -49,17 +46,13 @@ const historyPagParamas = (
     filters.date = date;
   }
 
-  if (page) {
-    pageNum = Number(page);
-  }
+  const pageNum = Number(page) || 1;
 
-  if (perPage) {
-    perPageNum = Number(perPage);
-  }
+  const perPageNum = Number(perPage) || 10;
 
   req.locals = { filters, page: pageNum, perPage: perPageNum };
 
   next();
 };
 
-export default historyPagParamas;
+export default historyFilterParams;

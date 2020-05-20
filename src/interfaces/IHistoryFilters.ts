@@ -2,8 +2,8 @@ import IHistoryDate from './IHistoryDate';
 
 interface IHistoryFilters {
   room?: string;
-  name?: string;
-  adress?: string;
+  user?: string;
+  ip?: string;
   date?: IHistoryDate;
 }
 

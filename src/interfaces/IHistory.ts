@@ -1,9 +1,9 @@
 interface IHistory {
-  name: string;
+  user: string;
   message: string;
   room: string;
   date: Date;
-  adress: string;
+  ip: string;
 }
 
 export default IHistory;
