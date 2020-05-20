@@ -6,11 +6,11 @@ const Model = mongoose.model;
 
 const historySchema: Schema<IHistoryRec> = new Schema(
   {
-    name: String,
+    user: String,
     message: String,
     room: String,
     date: Date,
-    adress: String,
+    ip: String,
   },
   { versionKey: false }
 );

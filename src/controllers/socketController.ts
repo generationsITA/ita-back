@@ -49,7 +49,13 @@ const socketController = (socket: SocketIO.Socket) => {
 
     const sendingDate = new Date();
 
-    addHistory({ name, message: text, room, date: sendingDate, adress });
+    addHistory({
+      user: name,
+      message: text,
+      room,
+      date: sendingDate,
+      ip: adress,
+    });
 
     socket.broadcast.to(room).emit('message', { name, text });
 

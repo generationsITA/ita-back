@@ -1,3 +1,3 @@
-import historyPagParams from './historyPagParams';
+import historyFilterParams from './historyFilterParams';
 
-export { historyPagParams };
+export { historyFilterParams };

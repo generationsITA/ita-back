@@ -1,10 +1,10 @@
 import express from 'express';
 
 import { getHistory } from '../controllers';
-import { historyPagParams } from '../middlewares';
+import { historyFilterParams } from '../middlewares';
 
 const historyRouter = express.Router();
 
-historyRouter.route('/').get(historyPagParams, getHistory);
+historyRouter.route('/').get(historyFilterParams, getHistory);
 
 export default historyRouter;
