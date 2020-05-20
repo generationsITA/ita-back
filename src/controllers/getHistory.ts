@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 
-import { getAllHistory } from '../services';
+import { findHistory } from '../services';
 import { IHistoryRec, IRequest } from '../interfaces';
 
 const getHistory = async (
@@ -9,11 +9,12 @@ const getHistory = async (
   next: NextFunction
 ) => {
   try {
-    const { page, perPage } = req.locals;
+    const history = await findHistory(req.locals);
 
-    const history = await getAllHistory(page, perPage);
+    req.locals = null;
 
     res.json(history);
+    res.status(200);
   } catch (error) {
     next(error);
   }

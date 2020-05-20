@@ -1,4 +1,4 @@
 import addHistory from './addHistory';
-import getAllHistory from './getAllHistory';
+import findHistory from './findHistory';
 
-export { addHistory, getAllHistory };
+export { addHistory, findHistory };
