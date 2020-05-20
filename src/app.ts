@@ -27,10 +27,6 @@ app.use('/api', router);
 
 io.on('connect', socketController);
 
-app.get('/', function (req, res) {
-  res.json('Server running');
-});
-
 app.use(errorhandler());
 
 server.listen(port, () => console.log(`Server spinning on port ${port}`));
