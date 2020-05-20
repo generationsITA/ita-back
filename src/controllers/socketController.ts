@@ -24,10 +24,12 @@ const socketController = (socket: SocketIO.Socket) => {
       console.log(name);
 
       socket.join(room);
+
       socket.broadcast.to(room).emit('message', {
         name: 'System',
         text: `${name} joined ${room}`,
       });
+
       socket.emit('message', {
         name: 'System',
         text: `You joined ${room}`,
@@ -42,6 +44,7 @@ const socketController = (socket: SocketIO.Socket) => {
       socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
 
     const user = userHandler.getUser(socket.id);
+
     if (!user) {
       return;
     }

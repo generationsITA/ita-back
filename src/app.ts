@@ -25,14 +25,7 @@ app.use(cors());
 
 app.use('/api', router);
 
-io.on('connect', (socket: SocketIO.Socket) => {
-  socketController(socket);
-  console.log(socket.id);
-});
-
-app.get('/', function (req, res) {
-  res.json('Server running');
-});
+io.on('connect', socketController);
 
 app.use(errorhandler());
 
