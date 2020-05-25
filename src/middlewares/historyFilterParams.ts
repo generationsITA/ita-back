@@ -1,6 +1,6 @@
-import isEmpty from 'lodash.isempty';
 import { Response, NextFunction } from 'express';
 
+import * as helpers from '../helpers';
 import * as interfaces from '../interfaces';
 
 const historyFilterParams = (
@@ -8,49 +8,55 @@ const historyFilterParams = (
   res: Response<interfaces.IHistoryRec[]>,
   next: NextFunction
 ) => {
-  const { room, user, ip, startDate, endDate, page, perPage } = req.query;
+  const {
+    FilterTypes,
+    DefaultFilterKeys,
+    DateFilterKeys,
+    PaginationFilterKeys,
+  } = interfaces;
 
-  const filters: interfaces.IHistoryFilters = {};
+  const queryHandler: interfaces.IQueryHandler = {
+    [FilterTypes.default]: helpers.defaultQueryHandler,
+    [FilterTypes.date]: helpers.dateQueryHandler,
+    [FilterTypes.pagination]: helpers.paginationQueryHandler,
+  };
 
-  if (room) {
-    filters.room = room.toString();
-  }
+  const necessaryParams: interfaces.IFilterParam[] = [
+    {
+      key: DefaultFilterKeys.room,
+      type: FilterTypes.default,
+    },
+    {
+      key: DefaultFilterKeys.user,
+      type: FilterTypes.default,
+    },
+    {
+      key: DefaultFilterKeys.ip,
+      type: FilterTypes.default,
+    },
+    {
+      key: DateFilterKeys.startDate,
+      type: FilterTypes.date,
+    },
+    {
+      key: DateFilterKeys.endDate,
+      type: FilterTypes.date,
+    },
+    {
+      key: PaginationFilterKeys.page,
+      type: FilterTypes.pagination,
+    },
+    {
+      key: PaginationFilterKeys.perPage,
+      type: FilterTypes.pagination,
+    },
+  ];
 
-  if (user) {
-    filters.user = user.toString();
-  }
-
-  if (ip) {
-    filters.ip = ip.toString();
-  }
-
-  const date: interfaces.IHistoryDate = {};
-
-  if (startDate) {
-    const parsedStartDate = new Date(startDate.toString());
-
-    if (!isNaN(Number(parsedStartDate))) {
-      date.$gte = parsedStartDate;
-    }
-  }
-
-  if (endDate) {
-    const parsedEndDate = new Date(endDate.toString());
-
-    if (!isNaN(Number(parsedEndDate))) {
-      date.$lte = parsedEndDate;
-    }
-  }
-
-  if (!isEmpty(date)) {
-    filters.date = date;
-  }
-
-  const pageNum = Number(page) || 1;
-
-  const perPageNum = Number(perPage) || 10;
-
-  req.locals = { filters, page: pageNum, perPage: perPageNum };
+  req.locals = helpers.buildFilterOptions(
+    req.query,
+    queryHandler,
+    necessaryParams
+  );
 
   next();
 };
