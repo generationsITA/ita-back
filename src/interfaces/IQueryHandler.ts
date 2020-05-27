@@ -1,18 +1,15 @@
-import FilterTypes from './FilterTypes';
-import DateFilterKeys from './DateFilterKeys';
+import * as e from '../helpers';
 import IHistoryOptions from './IHistoryOptions';
-import DefaultFilterKeys from './DefaultFilterKeys';
-import PaginationFilterKeys from './PaginationFilterKeys';
 
 type QueryHandler = (
   value: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined,
-  key: DefaultFilterKeys | DateFilterKeys | PaginationFilterKeys
+  key: e.DefaultFilterKeys | e.DateFilterKeys | e.PaginationFilterKeys
 ) => IHistoryOptions;
 
 interface IQueryHandler {
-  [FilterTypes.default]: QueryHandler;
-  [FilterTypes.date]: QueryHandler;
-  [FilterTypes.pagination]: QueryHandler;
+  [e.FilterTypes.default]: QueryHandler;
+  [e.FilterTypes.date]: QueryHandler;
+  [e.FilterTypes.pagination]: QueryHandler;
 }
 
 export default IQueryHandler;

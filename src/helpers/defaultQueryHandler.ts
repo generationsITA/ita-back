@@ -1,4 +1,5 @@
-import { DefaultFilterKeys, IHistoryOptions } from '../interfaces';
+import { DefaultFilterKeys } from '../helpers';
+import { IHistoryOptions } from '../interfaces';
 
 const defaultQueryHandler = (
   value: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined,

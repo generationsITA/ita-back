@@ -1,7 +1,9 @@
-import FilterTypes from './FilterTypes';
-import DateFilterKeys from './DateFilterKeys';
-import DefaultFilterKeys from './DefaultFilterKeys';
-import PaginationFilterKeys from './PaginationFilterKeys';
+import {
+  FilterTypes,
+  DateFilterKeys,
+  DefaultFilterKeys,
+  PaginationFilterKeys,
+} from '../helpers';
 
 interface IFilterParam {
   key: DateFilterKeys | DefaultFilterKeys | PaginationFilterKeys;

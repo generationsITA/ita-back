@@ -1,4 +1,5 @@
-import { PaginationFilterKeys, IHistoryOptions } from '../interfaces';
+import { IHistoryOptions } from '../interfaces';
+import { PaginationFilterKeys } from '../helpers';
 
 const paginationQueryHandler = (
   value: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined,

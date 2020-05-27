@@ -1,4 +1,5 @@
-import { DateFilterKeys, IHistoryOptions } from '../interfaces';
+import { DateFilterKeys } from '../helpers';
+import { IHistoryOptions } from '../interfaces';
 
 const dateQueryHandler = (
   value: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined,
