@@ -13,7 +13,7 @@ const historyFilterParams = (
     DefaultFilterKeys,
     DateFilterKeys,
     PaginationFilterKeys,
-  } = interfaces;
+  } = helpers;
 
   const queryHandler: interfaces.IQueryHandler = {
     [FilterTypes.default]: helpers.defaultQueryHandler,
