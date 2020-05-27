@@ -2,9 +2,14 @@
   "compileOnSave": true,
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "js/",
+    "outDir": "dist/",
     "target": "ESNext",
     "watch": true,
-    "noImplicitAny": true
-  }
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*", "src/interfaces/.ts"],
+  "exclude": ["node_modules", "dist"]
 }
